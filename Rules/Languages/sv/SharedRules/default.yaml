@@ -72,8 +72,7 @@
   match: "."
   replace: [x: "*"]
 
-
-- name: structure-simple
+- name: literal-simple
   # don't include nested fractions. E.g, fraction a plus b over c + 1 end fraction" is ambiguous
   # by simplistic SimpleSpeak's rules "b over c" is a fraction, but if we say nested fractions
   # are never simple, then any 'over' applies only to enclosing "fraction...end fraction" pair.
@@ -87,7 +86,7 @@
   - x: "*[2]"
   - pause: short
 
-- name: structure-default
+- name: literal-default
   tag: mfrac
   match: "."
   replace:
@@ -103,44 +102,37 @@
       then: [pause: short]
   - x: "*[2]"
   - pause: short
-  - T: "slut division"          # phrase("start of fraction x over y 'end over'")
+  - test:
+      if: "$Impairment = 'Blindness'"
+      then: [T: "slut"]          # phrase("start of fraction x over y 'end over'")
   - pause: medium
 
-
 # not sure what really should be said for these since we should not assume they are square roots
-- name: structure-default
+- name: literal-default
   tag: msqrt
   match: "."
   replace:
-  - T: "rotsymbolen"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then: [T: "ur"]    # phrase("the root 'of' x")
+  - T: "roten ur"
   - x: "*[1]"
   - pause: short
   - test:
-      if: "not(IsNode(*[1],'leaf'))"
-      then: [T: "slut rotsymbol"] # phrase("root of x 'end root symbol'")
+      if: "not(IsNode(*[1],'leaf')) or $Impairment = 'Blindness'"
+      then: [T: "slut rot", pause: medium] # phrase("root of x 'end root symbol'")
 
 # not sure what really should be said for these since we should not assume they are square roots
-- name: structure-default
+- name: literal-default
   tag: mroot
   match: "."
   replace:
-  - T: "rotsymbolen"
-  - T: "med index"      # phrase("the root of x 'with index' 5")
+  - T: "rot med index" # phrase("the 'root with index' 3 of 5")
   - x: "*[1]"
-  # SWEDISH: Check if the order of base and index is correct!
   - pause: short
-  - test:
-      if: "$Verbosity!='Terse'"
-      then: [T: "ur"]   # phrase("the root 'of' x")
+  - T: "ur"              # phrase("the root 'of' x")
   - x: "*[2]"
   - pause: short
   - test:
       if: "not(IsNode(*[2],'leaf'))"
-      then: [T: "slut rotsymbol"] # phrase("root of x 'end root symbol'")
-
+      then: [T: "slut rot"] # phrase("root of x 'end root symbol'")
 
 - name: simple-sub
   tag: indexed-by
@@ -162,12 +154,23 @@
       then: [T: "nedsänkt"]      # phrase(x 'sub' 2)
   - x: "*[2]"
 
-- name: structure
+- name: power-indexed-by
+  tag: power-indexed-by
+  match: "."
+  replace:
+  - x: "*[1]"
+  - T: "nedsänkt"               # phrase(x 'sub' 2)
+  - x: "*[2]"
+  - pause: short
+
+- name: literal
   tag: msub
   match: "."
   replace:
   - x: "*[1]"
-  - T: "nedsänkt"              # phrase(x 'sub' 2)
+  - test:
+      if: "not($Verbosity='Terse' and *[2][self::m:mn and not(translate(., '.,', '')!=.)])"  # just say "x 1" for terse vs "x sub 1"
+      then: [T: "nedsänkt"]      # phrase(x 'sub' 2)
   - x: "*[2]"
 
 - name: structure
