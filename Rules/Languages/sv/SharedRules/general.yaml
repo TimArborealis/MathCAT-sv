@@ -283,7 +283,10 @@
                                     IsInDefinition(substring(., 2), 'Speech', 'NeuterUnits') != ''
                                   ) ]"  
   replace:
-  - x: "IfThenElse($NeuterUnitFollows, 'ett', 'en')"
+  - test:
+      if: "$UnitSibling/..[self::m:mrow and count(*)=3 and *[2][.='\u2062']]"
+      then: [{x: "IfThenElse($NeuterUnitFollows, 'ett', 'en')"}]
+      else: [{T: "1"}]
 
 # the order of matching is
 # 1. does it match the base of an SI unit
