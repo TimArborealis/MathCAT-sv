@@ -159,7 +159,7 @@ fn simple_natural_log() -> Result<()> {
 fn natural_log() -> Result<()> {
     let expr = "<math><mi>ln</mi><mo>(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>)</mo></math>";
     test_ClearSpeak("sv", "ClearSpeak_Log", "LnAsNaturalLog",expr,
-    "naturliga logaritmen av; vänster-parentes; x plus y; höger-parentes")?;
+    "naturliga logaritmen av, vänster-parentes; x plus y; höger-parentes")?;
     return Ok(());
 
 }
@@ -358,7 +358,7 @@ fn explicit_times_none_superscript() -> Result<()> {
         <mrow><mi>x</mi><mi>y</mi></mrow>
         <mo>)</mo></mrow>
         </mrow></math>";
-        test("sv", "ClearSpeak", expr, "b, vänster parentes; x y; höger parentes")?;
+        test("sv", "ClearSpeak", expr, "b, vänster-parentes; x y; höger-parentes")?;
         return Ok(());
 
     }
