@@ -563,20 +563,20 @@
       - else_if: ".='lg'"
         then_test:
           if: "$Verbosity!='Verbose'"
-          then: [spell: "'lg'"]      # phrase(the 'lg' of x)
+          then: [SPELL: "'lg'"]      # phrase(the 'lg' of x)
           else: [T: "tio-logaritmen"]
       # SWEDISH: We have added the term "lg" for the logarithm with base 10. Also added a verbosity test for long and short form.
       - else_if: "$Verbosity!='Verbose'"
-        then: [spell: "'ln'"]
+        then: [SPELL: "'ln'"]
         else: [T: "naturliga logaritmen"]      # phrase(the 'natural log' function is used in mathematics)
       else:
       - test:
         - if: ".='log'"
           then: [T: "logg"]      # phrase(the 'log' function is used in mathematics)
         - else_if: ".='lg'"
-          then: [spell: "'lg'"]      # phrase(the 'lg' of x)
+          then: [SPELL: "'lg'"]      # phrase(the 'lg' of x)
         - else_if: "$Verbosity='Terse'"
-          then: [spell: "'ln'"]
+          then: [SPELL: "'ln'"]
           else: [T: "naturliga logaritmen"]      # phrase(the 'natural log' function is used in mathematics)
 
 - name: multi-line # audit-ignore

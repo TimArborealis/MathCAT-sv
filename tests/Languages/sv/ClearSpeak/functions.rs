@@ -265,7 +265,7 @@ fn no_times_sqrt() -> Result<()> {
         <mo>=</mo>
         <msqrt> <mrow>  <mi>a</mi><mi>b</mi></mrow> </msqrt>
         </mrow></math>";
-    test("sv", "ClearSpeak", expr, "kvadratroten ur a; kvadratroten ur b; lika med, kvadratroten ur a b")?;
+    test("sv", "ClearSpeak", expr, "kvadratroten ur a; gånger kvadratroten ur b; lika med, kvadratroten ur a b")?;
     return Ok(());
 
 }
